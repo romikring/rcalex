@@ -81,9 +81,19 @@ class Akrabat_Db_Schema_Manager
         }
         
         return $version;
-    } 
+    }
     
-    /**
+    public function getLastMigrateFilename()
+    {
+        
+    }
+
+    public function addMigrateFile($filename)
+    {
+        
+    }
+
+        /**
      * Updates the database schema to a specified version. If upgrading (increasing
      * version number) the schema version will be the largest available version
      * that is less than or equal to the specified version. ie, if the highest version

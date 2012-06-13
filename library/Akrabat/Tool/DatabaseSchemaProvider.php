@@ -147,7 +147,24 @@ class Akrabat_Tool_DatabaseSchemaProvider extends Zend_Tool_Project_Provider_Abs
         }
     }
     
-    /**
+    public function create($name, $dir='./scripts/migrations')
+    {
+        $response = $this->_registry->getResponse();
+        try {
+            $manager = new Akrabat_Db_Schema_Manager($dir);
+            $manager->addMigrateFile($name);
+            
+            $response->appendContent("Migrate file " . $manager->getLastMigrateFilename() . " has been added.");
+            
+            return true;
+        } catch (Exception $e) {
+            $response->appendContent('AN ERROR HAS OCCURED:');
+            $response->appendContent($e->getMessage());
+            return false;
+        }
+    }
+
+        /**
      * Provide the current schema version number
      * 
      * @return boolean
