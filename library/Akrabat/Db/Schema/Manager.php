@@ -83,14 +83,89 @@ class Akrabat_Db_Schema_Manager
         return $version;
     }
     
+    private function _prepareDir($directory)
+    {
+        if ( $directory === '.' ) { // Relative path
+            $dir = realpath(getcwd().DIRECTORY_SEPARATOR.$this->_dir);
+        } else {
+            $dir = realpath($this->_dir);
+        }
+        
+        if ( FALSE === $dir ) {
+            throw new Exception("Path '{$this->_dir}' not found");
+        }
+        
+        return $dir;
+    }
+    
     public function getLastMigrateFilename()
     {
+        $number = 0;
+        $dir = $this->_prepareDir($this->_dir);
         
+        $files = scandir($dir);
+        foreach( $files as $file ) {
+            if ( $file{0} === '.' )
+                continue;
+            
+            if ( preg_match('/^(\d{3,})-[a-z][0-9a-z]+\.php$/i', $file, $match) ) {
+                $n = intval($match[1], 10);
+                if ( $number < $n )
+                    $number = $n;
+            }
+        }
+        
+        return $number;
+    }
+    
+    public function isValidMigrationName($name)
+    {
+        if ( !preg_match('/^[a-z][0-9a-z]+$/i', $name) ) {
+            throw new Exception('Incorrect file name: only numbers and letters are allowed. File name cannot start from number');
+        }
+        
+        $dir = $this->_prepareDir($this->_dir);
+        
+        $files = scandir($dir);
+        foreach( $files as $file ) {
+            if ( $file{0} === '.' )
+                continue;
+            
+            if ( preg_match('/^\d{3,}-([a-z][0-9a-z]+)\.php$/i', $file, $match) ) {
+                if ( $match[1] == $name )
+                    throw new Exception('Class with name '."$name".' already in use');
+            }
+        }
+        
+        return true;
     }
 
     public function addMigrateFile($filename)
     {
+        $data = "<?php\n";
+        $data .= "class %s extends Akrabat_Db_Schema_AbstractChange\n";
+        $data .= "{\n";
+        $data .= "    public function up() {}\n";
+        $data .= "    public function down() {}\n";
+        $data .= "}\n";
         
+        $class = ucfirst($filename);
+        $this->isValidMigrationName($class);
+        
+        $newFile = sprintf('%03d-%s.php', $this->getLastMigrateFilename() + 1, $class);
+        $fullFileName = $this->_dir.DIRECTORY_SEPARATOR.$newFile;
+        $data = sprintf($data, $class);
+        
+        
+        $fhandle = fopen($fullFileName, 'w');
+        if ( FALSE === $fhandle ) {
+            throw new Exception("I cannot create file $fullFileName");
+        }
+        fwrite($fhandle, $data, strlen($data));
+        fclose($fhandle);
+        chmod($fullFileName, 0644);
+        
+        return $newFile;
     }
 
         /**

@@ -147,14 +147,24 @@ class Akrabat_Tool_DatabaseSchemaProvider extends Zend_Tool_Project_Provider_Abs
         }
     }
     
-    public function create($name, $dir='./scripts/migrations')
+    /**
+     * Create new migration file
+     * 
+     * @param string $name
+     * @param string $env
+     * @param string $dir
+     * @return boolean 
+     */
+    public function create($name, $env = 'development', $dir='./scripts/migrations')
     {
+        $this->_init($env);
+        
         $response = $this->_registry->getResponse();
         try {
-            $manager = new Akrabat_Db_Schema_Manager($dir);
-            $manager->addMigrateFile($name);
+            $manager = new Akrabat_Db_Schema_Manager($dir, $this->_getDbAdapter());
+            $file = $manager->addMigrateFile($name);
             
-            $response->appendContent("Migrate file " . $manager->getLastMigrateFilename() . " has been added.");
+            $response->appendContent("Migrate file '" . $file . "' has been added.");
             
             return true;
         } catch (Exception $e) {
