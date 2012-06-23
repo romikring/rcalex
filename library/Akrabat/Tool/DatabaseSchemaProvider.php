@@ -221,6 +221,7 @@ class Akrabat_Tool_DatabaseSchemaProvider extends Zend_Tool_Project_Provider_Abs
      */
     protected function _init($env)
     {
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', $env);
         $profile = $this->_loadProfile(self::NO_PROFILE_THROW_EXCEPTION);
         $appConfigFileResource = $profile->search('applicationConfigFile');
 
@@ -231,6 +232,7 @@ class Akrabat_Tool_DatabaseSchemaProvider extends Zend_Tool_Project_Provider_Abs
 
         // Base config, normally the application.ini in the configs dir of your app
         $this->_config = $this->_createConfig($appConfigFilePath, $env, true);
+        Zend_Registry::set('config', $this->_config);
 
         // Are there any override config files?
         foreach($this->_getAppConfigOverridePathList($appConfigFilePath) as $path) {
