@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <guest>
+        <allow>
+            <index>
+                <action>index</action>
+            </index>
+            <auth>
+                <action>password-saved</action>
+                <action>password-dropped</action>
+                <action>index</action>
+                <action>sign-in</action>
+                <action>sign-up</action>
+                <action>forgot</action>
+                <action>restore</action>
+            </auth>
+            <error>
+                <action>error</action>
+            </error>
+        </allow>
+        <deny>
+            <auth>
+                <action>sign-out</action>
+            </auth>
+        </deny>
+    </guest>
+    <member>
+        <allow>
+            <auth>
+                <action>sign-out</action>
+            </auth>
+            <member>
+                <action>edit</action>
+                <action>update-password</action>
+                <action>update-data</action>
+                <action>update-avatar</action>
+                <action>remove-avatar</action>
+            </member>
+        </allow>
+        <deny>
+            <auth>
+                <action>password-saved</action>
+                <action>password-dropped</action>
+                <action>index</action>
+                <action>sign-in</action>
+                <action>sign-up</action>
+                <action>forgot</action>
+                <action>restore</action>
+            </auth>
+        </deny>
+    </member>
+    
+    <!--
+        Admin have all rights in use already
+        You can find convinient this section
+        for remove any permisson from admin scope
+        
+    <administrator>
+        <deny>
+            <operations>
+                <action>answer-moderate</action>    - Возможность редактировать ответы на вопросы
+                <action>question-moderate</action>  - Возможность редактировать вопросы и удалять их полностью (с ответами)
+                <action>member-moderate</action>    - Возможность менять данные пользователей
+                <action>member-change-role</action> - Возможность устанавливать права пользователям
+            </operations>
+        </deny>
+    </administrator>
+    
+    -->
+</root>

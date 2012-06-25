@@ -23,13 +23,19 @@
           <actionMethod actionName="passwordSaved"/>
         </controllerFile>
       </controllersDirectory>
-      <formsDirectory enabled="false"/>
+      <formsDirectory>
+        <formFile formName="SignUp"/>
+        <formFile formName="SignIn"/>
+      </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
           <layoutScriptFile layoutName="layout"/>
         </layoutScriptsDirectory>
       </layoutsDirectory>
-      <modelsDirectory/>
+      <modelsDirectory>
+        <modelFile modelName="Users"/>
+        <modelFile modelName="UsersProfile"/>
+      </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>
         <viewScriptsDirectory>

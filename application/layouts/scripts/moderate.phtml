@@ -8,11 +8,15 @@
         <?php echo $this->headScript(); ?>
     </head>
     <body>
-        <?php echo $this->render('partial/header.phtml'); ?>
+        <?php echo $this->render('header.phtml'); ?>
         
-        <?php echo $this->layout()->content; ?>
+        <div class="content">
+            <?php echo $this->render('submenu/moderate.phtml');?>
+            <?php echo $this->layout()->content; ?>
+            <div class="cb"></div>
+        </div>
         
-        <?php echo $this->render('partial/footer.phtml'); ?>
+        <?php echo $this->render('footer.phtml'); ?>
         <?php echo $this->inlineScript(); ?>
     </body>
 </html>
