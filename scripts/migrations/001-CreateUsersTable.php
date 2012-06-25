@@ -27,7 +27,7 @@ class CreateUsersTable extends Akrabat_Db_Schema_AbstractChange
         $admin = array(
             'email' => $config->site->admin->email,
             'username' => $config->site->admin->username,
-            'password' => sha1($config->site->secure->salt.$config->site->admin->password),
+            'password' => sha1($config->secure->salt.$config->site->admin->password),
             'role' => 'administrator',
             'date' => time(),
             'status' => 'active'
