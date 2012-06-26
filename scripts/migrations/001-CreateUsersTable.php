@@ -1,13 +1,11 @@
 <?php
 class CreateUsersTable extends Akrabat_Db_Schema_AbstractChange
 {
-    protected $table = "users";
+    const TABLE = "users";
     
     public function up() {
-        $config = Zend_Registry::get('config');
-        
         $sql =
-            "CREATE TABLE IF NOT EXISTS `{$this->table}` (
+            "CREATE TABLE IF NOT EXISTS `" . self::TABLE . "` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `email` varchar(60) NOT NULL,
                 `username` varchar(20) NOT NULL,
@@ -23,20 +21,9 @@ class CreateUsersTable extends Akrabat_Db_Schema_AbstractChange
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
         
         $this->_db->query($sql);
-        
-        $admin = array(
-            'email' => $config->site->admin->email,
-            'username' => $config->site->admin->username,
-            'password' => sha1($config->secure->salt.$config->site->admin->password),
-            'role' => 'administrator',
-            'date' => time(),
-            'status' => 'active'
-        );
-        
-        $this->_db->insert($this->table, $admin);
     }
     
     public function down() {
-        $this->_db->query("DROP TABLE IF EXISTS {$this->table}");
+        $this->_db->query("DROP TABLE IF EXISTS ".self::TABLE);
     }
 }

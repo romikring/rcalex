@@ -26,6 +26,8 @@
       <formsDirectory>
         <formFile formName="SignUp"/>
         <formFile formName="SignIn"/>
+        <formFile formName="ForgotPassword"/>
+        <formFile formName="MakeNewPassword"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>

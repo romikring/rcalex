@@ -26,19 +26,21 @@ class Rabotal_Auth extends Zend_Auth {
     }
     
     public function clearIdentity() {
-        $options = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOption('site');
+        $config = new Zend_Config_Ini(APPLICATION_PATH.DIRECTORY_SEPARATOR.'configs'.DIRECTORY_SEPARATOR.'application.ini', APPLICATION_ENV);
         
-        $usersTable = new Rabotal_Model_Users;
-        $user = $usersTable->find($this->getIdentity()->id)->current();
-        if ( $user ) {
-            $user->auto_signin_key = '';
-            $user->save();
+        if ( $this->hasIdentity() ) {
+            $usersTable = new Rabotal_Model_Users;
+            $user = $usersTable->find($this->getIdentity()->id)->current();
+            if ( $user ) {
+                $user->auto_signin_key = '';
+                $user->save();
+            }
+            
+            parent::clearIdentity();
         }
         
-        parent::clearIdentity();
-        
-        setcookie('uid', -1, time()-self::DAYS_15, '/', $options['default']['domain']);
-        setcookie('ask', -1, time()-self::DAYS_15, '/', $options['default']['domain']);
+        setcookie('uid', -1, time()-self::DAYS_15, '/', $config->site->default->domain);
+        setcookie('ask', -1, time()-self::DAYS_15, '/', $config->site->default->domain);
         unset($_COOKIE['uid'], $_COOKIE['ask']);
     }
     

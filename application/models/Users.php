@@ -6,6 +6,10 @@ class Rabotal_Model_Users extends Zend_Db_Table_Abstract
     protected $_primary = 'id';
     protected $_sequence = true;
     
+    /**
+     * @param string $val Username or email
+     * @return Zend_Db_Table_Row_Abstract
+     */
     public function getByEmailOrLogin($val) {
         $query = $this->select();
         if ( FALSE !== strpos($val, '@') ) {

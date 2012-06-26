@@ -92,10 +92,76 @@ class AuthController extends Zend_Controller_Action
 
     public function forgotAction()
     {
+        $request = $this->getRequest();
+        $forgotForm = new Rabotal_Form_ForgotPassword;
+        
+        if ( $request->isPost() && $forgotForm->isValid($request->getPost()) ) {
+            $usersTable = new Rabotal_Model_Users;
+            $user = $usersTable->getByEmailOrLogin($forgotForm->getValue('name'));
+            
+            if ( !$user ) {
+                $forgotForm->getElement('name')->addError('Пользователь не найден');
+            } else {
+                $key = md5(microtime().$user->id.rand());
+                $profile = $user->findDependentRowset('Rabotal_Model_UsersProfile', 'User')->current();
+                
+                
+                $profile->forgot_key = $key;
+                $profile->save();
+                
+                $this->view->token = $key;
+                $this->view->baseUrl = Zend_Controller_Front::getInstance();
+                $this->view->user = $user;
+                $this->view->profile = $profile;    
+                
+                $mail = $this->getInvokeArg('bootstrap')->getResource('Mailer');
+                $mail->setBodyHtml($this->view->render('mail/html/restore-password.phtml'));
+                $mail->setBodyText($this->view->render('mail/txt/restore-password.phtml'));
+                $mail->setSubject($this->view->render('mail/subject/restore-password.phtml'));
+                $mail->addTo($user->email, $profile->fullname ? $profile->fullname : $user->username);
+                $mail->send();
+                
+                $this->_helper->FlashMessenger->addMessage('pass-dropped');
+                $this->_redirect('/auth/password-dropped');
+            }
+        }
+        
+        $this->view->forgotForm = $forgotForm;
     }
 
     public function restoreAction()
     {
+        $request = $this->getRequest();
+        $token = $request->getParam('token');
+        $options = $this->getInvokeArg('bootstrap')->getOption('secure');
+        
+        if ( !$token ) $this->_redirect ('/');
+        
+        $userProfileTable = new Rabotal_Model_UsersProfile;
+        
+        $profile = $userProfileTable->fetchRow(array('forgot_key = ?' => $token));
+        if ( !$profile ) {
+            $this->view->invalidToken = true;
+        } else {
+            $this->view->invalidToken = false;
+            
+            $makeNewPasswordForm = new Rabotal_Form_MakeNewPassword(
+                    array('action' => "/auth/restore/token/$token"));
+            
+            if ( $request->isPost() && $makeNewPasswordForm->isValid($request->getPost()) ) {
+                $user = $profile->findParentRow('Rabotal_Model_Users', 'User');
+                $user->password = sha1($options['salt'].$makeNewPasswordForm->getValue('password'));
+                $user->save();
+                
+                $profile->forgot_password = NULL;
+                $profile->save();
+                
+                $this->_helper->FlashMessenger->addMessage('pass-saved');
+                $this->_redirect('/auth/password-saved');
+            }
+            
+            $this->view->makeNewPasswordForm = $makeNewPasswordForm;
+        }        
     }
 
     public function signOutAction()
@@ -106,9 +172,15 @@ class AuthController extends Zend_Controller_Action
 
     public function passwordDroppedAction()
     {
+        $messages = $this->_helper->FlashMessenger->getMessages();
+        if ( empty($messages) || $messages[0] !== 'pass-dropped' )
+            $this->_redirect ('/');
     }
 
     public function passwordSavedAction()
     {
+        $messages = $this->_helper->FlashMessenger->getMessages();
+        if ( empty($messages) || $messages[0] !== 'pass-saved' )
+            $this->_redirect ('/');
     }
 }

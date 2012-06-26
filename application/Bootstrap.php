@@ -59,15 +59,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $auth = Rabotal_Auth::getInstance();
         $userTable = new Rabotal_Model_Users;
         $user = NULL;
-        $options = $this->getOption('site');
         
         if ( !$auth->hasIdentity() && !empty($_COOKIE['uid']) && !empty($_COOKIE['ask']) ) {
-            $_user = $userTable->find((int)$_COOKIE['uid']);
-            if ( $_user->count() && $_user->current()->auto_signin_key === $_COOKIE['ask'] ) {
-                $_user = $_user->current();
-                $auth->getStorage()->write((object) array(
-                    'id' => $_user->id, 'email' => $_user->email, 'username' => $_user->username
-                ));
+            $_user = $userTable->find((int)$_COOKIE['uid'])->current();
+            if ( $_user && $_user->auto_signin_key === $_COOKIE['ask'] ) {
+                Rabotal_Auth::identityWrite($_user);
+            } else {
+                $auth->clearIdentity();
             }
             unset($_user);
         }
@@ -77,18 +75,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             
             if ( !$user ) {
                 $auth->clearIdentity();
-                setcookie('uid', -1, time() - 3600, '/', $options['default']['domain']);
-                setcookie('ask', -1, time() - 3600, '/', $options['default']['domain']);
-                unset($_COOKIE['uid'], $_COOKIE['ask']);
-            }
-            
-            else {   
-                $userProfileTable = new Rabotal_Model_UsersProfile;
-                $userProfileRow = $userProfileTable->find($auth->getIdentity()->id)->current();
+                
+            } else {   
+                $userProfile = $user->findDependentRowset('Rabotal_Model_UsersProfile', 'User')->current();
 
-                if ( $userProfileRow && $userProfileRow->forgot_key !== '' ) {
-                    $userProfileRow->forgot_key = NULL;
-                    $userProfileRow->save();
+                if ( $userProfile && $userProfile->forgot_key !== '' ) {
+                    $userProfile->forgot_key = NULL;
+                    $userProfile->save();
                 }
 
                 $user->id = (int)$user->id;
