@@ -1,0 +1,97 @@
+.jcarousel-skin-tango .jcarousel-container {
+	width:708px !important;
+	position:relative;
+	left:50px;
+	top:-10px;
+}
+
+.jcarousel-skin-tango .jcarousel-direction-rtl {
+	direction: rtl;
+}
+
+.jcarousel-skin-tango .jcarousel-container-horizontal {
+    width: 710px;
+    padding: 20px 30px 10px 50px;
+}
+
+.jcarousel-skin-tango .jcarousel-clip {
+    overflow: hidden;
+}
+
+.jcarousel-skin-tango .jcarousel-clip-horizontal {
+    width:  680px;
+    height: 60px;
+}
+
+.jcarousel-skin-tango .jcarousel-item {
+    width: 162px;
+    height: 60px;
+}
+.jcarousel-skin-tango .jcarousel-item:last-child {
+	border-right:none;
+}
+.jcarousel-skin-tango .jcarousel-item, .jcarousel-skin-tango .jcarousel-item a {
+	font-size:11px;
+}
+.jcarousel-skin-tango .jcarousel-item .text a {
+	color:#9d9c9c;
+}
+.jcarousel-skin-tango .jcarousel-item .text {
+	font-size:11px;
+	color:#9d9c9c;
+	line-height:13px;
+	width:130px;
+}
+.jcarousel-skin-tango .jcarousel-item .text a.title2 {
+	color:#0473b9;
+	display:block;
+	margin-bottom:8px;
+}
+.jcarousel-skin-tango .jcarousel-item-horizontal {
+	margin-left: 0;
+    margin-right: 10px;
+}
+
+.jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-item-horizontal {
+	margin-left: 10px;
+    margin-right: 0;
+}
+
+.jcarousel-skin-tango .jcarousel-item-placeholder {
+    background: #fff;
+    color: #000;
+}
+
+/**
+ *  Horizontal Buttons
+ */
+.jcarousel-skin-tango .jcarousel-next-horizontal {
+    position: absolute;
+    top: 33px;
+    right: 5px;
+    width: 31px;
+    height: 27px;
+    cursor: pointer;
+    background: transparent url(rarr_s.jpg) no-repeat 0 0;
+}
+
+.jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-next-horizontal {
+    left: 5px;
+    right: auto;
+    background-image: url(rarr_s.jpg);
+}
+.jcarousel-skin-tango .jcarousel-prev-horizontal {
+    position: absolute;
+    top: 33px;
+    left: 5px;
+    width: 30px;
+    height: 27px;
+    cursor: pointer;
+    background: transparent url(larr_s.jpg) no-repeat 0 0;
+}
+
+.jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-prev-horizontal {
+    left: auto;
+    right: 5px;
+    background-image: url(larr_s.jpg);
+}
