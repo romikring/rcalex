@@ -1,6 +1,22 @@
-<?php if ( $this->user ): ?>
-    <a href="<?= $this->url(array('action' => 'profile', 'controller' => 'user', 'id' => $this->user->id))?>"><?= $this->user->username?></a> |
-    <a href="<?= $this->url(array('action' => 'sign-out', 'controller' => 'auth'))?>">Выйти</a>
-<?php else: ?>
-    <a href="/auth/sign-in">Войти</a>
-<?php endif; ?>
+<div class="left fl">
+    <a href="/" class="logo fl"><img src="/images/logo.jpg" alt="" /></a>
+    <div class="fr">
+        — &nbsp;&nbsp;Биржа труда для поиска работников по городам<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Удобный сервис. Профессиональный подход
+    </div>
+</div>
+
+<div class="right fr">
+
+    <img src="/images/human_icon.jpg" class="human_icon" alt=""/> <a href="/auth/sign-in">Войти</a> через
+    <a class="auth" href="#"><img src="/images/fb_icon.jpg" alt=""/></a> 
+    <a class="auth" href="#"><img src="/images/tw_icon.jpg" alt=""/></a> 
+    <a class="auth" href="#"><img src="/images/vk_icon.jpg" alt=""/></a> 
+    <a class="auth" href="#"><img src="/images/fb_icon.jpg" alt=""/></a> 
+    <a class="auth" href="#"><img src="/images/go_icon.jpg" alt=""/></a> 
+    <a class="auth" href="#"><img src="/images/lj_icon.jpg" alt=""/></a> 
+    <a class="auth" href="#"><img src="/images/yt_icon.jpg" alt=""/></a> 
+    <a class="auth fr" href="#" style="margin-left:10px;"><img src="/images/reg_button.jpg" alt=""/></a>
+</div>
+
+<div class="cb"></div>

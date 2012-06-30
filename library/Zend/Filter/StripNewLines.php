@@ -16,7 +16,7 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StripNewlines.php 24594 2012-01-05 21:27:01Z matthew $
+ * @version    $Id: StripNewLines.php 24594 2012-01-05 21:27:01Z matthew $
  */
 
 /**
@@ -30,7 +30,7 @@ require_once 'Zend/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_StripNewlines implements Zend_Filter_Interface
+class Zend_Filter_StripNewLines implements Zend_Filter_Interface
 {
 
     /**

@@ -1,0 +1,197 @@
+<?php $form = &$this->addProjectForm; ?>
+
+<div class="wide fl">
+    
+    <div class="title">
+        <h2 class="fl">Создать проект</h2>
+        <span class="fr">всего <b>13524</b> проекта</span>
+        <div class="cb"></div>
+    </div> <!-- .title -->
+    
+    <?= $this->form($form->getName(), array('id' => $form->getAttrib('id'), 'action' => $form->getAction(), 'method' => $form->getMethod())); ?>
+        <br/><br/>
+        <h3 class="title_black">Основная информация о проекте</h3>
+        <div class="grey_block">
+            <table style="width:100%;">
+                <tr>
+                    <td>
+                        <h4 class="title_black">Название проекта <span style="color:#e80000">*</span></h4>
+                        <?php $name = $form->getElement('name'); ?>
+                        <?= $this->formText($name->getName(), $name->getValue(), $name->getAttribs()); ?>
+                        <br/>
+                        <span class="green">Осталось 70 знаков</span>
+                    </td>
+                    <td class="right">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Укажите, что вы хотите заказать, например "Перевод документов с английского", " Фотосъемка свадьбы"
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="opt_left fl">
+                            <h4 class="title_black">Выберите специализацию <span style="color:#e80000">*</span></h4>
+                            <?php $category = $form->getElement('category'); ?>
+                            <?= $this->formSelect($category->getName(), $category->getValue(), $category->getAttribs(), $category->options ); ?>
+                            <div class="cb"></div>
+                        </div>
+                        <div class="opt_right fr">
+                            <h4 class="title_black">Уточните специализацию</h4>
+                            <?php $subCategory = $form->getElement('sub_category'); ?>
+                            <?= $this->formSelect($subCategory->getName(), $subCategory->getValue(), $subCategory->getAttribs(), $subCategory->options ); ?>
+                            <div class="cb"></div>
+                        </div>
+                    </td>
+                    <td class="right">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Выберите общее направление заказываемых работ из списка, а затем можете выбрать более узкую специализацию.
+                        </div>		
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4 class="title_black">Описание проекта <span style="color:#e80000">*</span></h4>
+                        <?php $description = $form->getElement('description'); ?>
+                        <?= $this->formTextarea($description->getName(), $description->getValue(), $description->getAttribs()); ?>
+                        <span class="green">Осталось 550 знаков</span>
+
+                    </td>
+                    <td class="right">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Опишите необходимый объем работ, необходимые навыки и процесс принятия работы. Помните, чем точнее вы опишите требуемые работы, тем легче вам будет найти нужного исполнителя.
+                        </div>		
+                    </td>
+                </tr>
+                <tr>
+                    <td><br/>
+                        <b>Прикрепленные файлы:</b><br/>
+                        <span class="green">rabota.doc <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br/>
+                        <span class="green">example.jpg <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br/>
+                        
+                        <br/>
+                        <div id="file-uploader-link" style="height:23px"></div>
+                    </td>
+                    <td class="right">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Не забудьте прикрпеить наглядные материалы: техническое задание, пример-картинку и т.д.
+                        </div>		
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <script type="text/javascript">
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('file-uploader-link'),
+                action: '',
+                debug: true
+            });
+        </script>
+
+
+
+        <br/><br/>
+        <h3 class="title_black">Бюджет и сроки проекта</h3>
+        <div class="grey_block">
+            <table style="width:100%;">
+                <tr>
+                    <td>
+                        <h4 class="title_black">Бюджет проекта</h4>
+                        <?php $budget = $form->getElement('budget'); ?>
+                        <?= $this->formText($budget->getName(), $budget->getValue(), $budget->getAttribs()); ?> руб.<br/>
+                    </td>
+                    <td class="right2">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Укажите выделенный на проект бюджет, он может быть конкретным, например “5000 руб.”, а может быть в дапазоне, например “5000-10000 руб.”
+                        </div>		
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4 class="title_black">Период приема заявок <span style="color:#e80000">*</span></h4>
+                        <?php $period = $form->getElement('period'); ?>
+                        <?= $this->formSelect($period->getName(), $period->getValue(), $period->getAttribs(), $period->options); ?>
+                    </td>
+                    <td class="right2">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Укажите в течение какого срока ваше предложение будет актально, чтобы после истечения этого периода мы закрыли проект и перестали отсылать вам отклики исполнителей. Изменить срок можно в любое время.
+                        </div>		
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4 class="title_black">Местонахождение исполнителя</h4>
+                        <?php $place = $form->getElement('employee_place'); ?>
+                        <?= $this->formText($place->getName(), $place->getValue(), $place->getAttribs()); ?><br/>
+                    </td>
+                    <td class="right2">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Укажите город, откуда должен быть исполнитель. Если место не имеет значения, то оставьте поле не заполненным.
+                        </div>		
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <?php if( empty($this->user) ): ?>
+        <br/><br/>
+        <h3 class="title_black">Авторизация</h3>
+        <div class="grey_block">
+            <table style="width:100%;">
+                <tr>
+                    <td style="width:200px;">
+                        <h4 class="title_black fl">
+                            <label for="auth-user-new"><input id="auth-user-new" type="radio" name="new_user" value="1" class="radio"/> Я новый пользователь</label>
+                        </h4>
+                        <br/>
+                        <h4 class="title_black fl">
+                            <label for="auth-user-old"><input id="auth-user-old" type="radio" name="new_user" value="0" class="radio"/> Я уже зарегистрирован</label>
+                        </h4>
+                    </td>
+                    <td>
+                        <?php $email = $form->getElement('email'); ?>
+                        <?= $this->formText($email->getName(), $email->getValue(), $email->getAttribs()); ?>
+                        <br/>
+                        <?php $password = $form->getElement('password'); ?>
+                        <?= $this->formPassword($password->getName(), $password->getValue(), $password->getAttribs()); ?>
+                        <br/>
+                        <?php $retype = $form->getElement('retype'); ?>
+                        <?= $this->formPassword($retype->getName(), $retype->getValue(), $retype->getAttribs()); ?>
+                        <br/>
+                    </td>
+                    <td class="right">
+                        <img src="/images/notice_icon.png" class="fl" alt=""/>
+                        <div class="fr">
+                            Быстрая регистрация позволит вам мгновенно разместить проект. Более подробную информацию о себе вы сможете заполнить позже на странице со своим профилем.
+                        </div>		
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <script type="text/javascript">
+            function ckState() {
+                if( this.value == 1 ) { $("#retype").attr('disabled', false); }
+                else                  { $("#retype").attr('disabled', true); }
+            }
+            $.each(['auth-user-new', 'auth-user-old'], function(idx, val) {
+                $('#' + val).click(ckState);
+            });
+        </script>
+        <?php endif; ?>
+        
+        <center style="font-style:italic;">
+            <input type="submit" class="add_proj_bottom"/><br/>
+            совершенно бесплатно
+        </center>
+    </form>
+
+    <br/><br/>
+</div> <!-- .wide -->

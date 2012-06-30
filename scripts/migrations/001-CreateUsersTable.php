@@ -5,7 +5,7 @@ class CreateUsersTable extends Akrabat_Db_Schema_AbstractChange
     
     public function up() {
         $sql =
-            "CREATE TABLE IF NOT EXISTS `" . self::TABLE . "` (
+            "CREATE TABLE `" . self::TABLE . "` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `email` varchar(60) NOT NULL,
                 `username` varchar(20) NOT NULL,
@@ -24,6 +24,6 @@ class CreateUsersTable extends Akrabat_Db_Schema_AbstractChange
     }
     
     public function down() {
-        $this->_db->query("DROP TABLE IF EXISTS ".self::TABLE);
+        $this->_db->query("DROP TABLE ".self::TABLE);
     }
 }

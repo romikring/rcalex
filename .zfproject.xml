@@ -22,12 +22,22 @@
           <actionMethod actionName="passwordDropped"/>
           <actionMethod actionName="passwordSaved"/>
         </controllerFile>
+        <controllerFile controllerName="Project">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="add"/>
+          <actionMethod actionName="uploadFile"/>
+        </controllerFile>
+        <controllerFile controllerName="About">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="project"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="SignUp"/>
         <formFile formName="SignIn"/>
         <formFile formName="ForgotPassword"/>
         <formFile formName="MakeNewPassword"/>
+        <formFile formName="AddProject"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -37,6 +47,9 @@
       <modelsDirectory>
         <modelFile modelName="Users"/>
         <modelFile modelName="UsersProfile"/>
+        <modelFile modelName="Projects"/>
+        <modelFile modelName="Categories"/>
+        <modelFile modelName="SubCategories"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>
@@ -70,6 +83,21 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Auth">
             <viewScriptFile forActionName="passwordSaved"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Project">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Project">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="About">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="About">
+            <viewScriptFile forActionName="project"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Project">
+            <viewScriptFile forActionName="uploadFile"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
@@ -117,6 +145,15 @@
             <testApplicationActionMethod forActionName="signOut"/>
             <testApplicationActionMethod forActionName="passwordDropped"/>
             <testApplicationActionMethod forActionName="passwordSaved"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="Project">
+            <testApplicationActionMethod forActionName="index"/>
+            <testApplicationActionMethod forActionName="add"/>
+            <testApplicationActionMethod forActionName="uploadFile"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="About">
+            <testApplicationActionMethod forActionName="index"/>
+            <testApplicationActionMethod forActionName="project"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>

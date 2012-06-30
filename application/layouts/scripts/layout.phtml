@@ -1,18 +1,32 @@
-<?php echo $this->doctype(); ?>
+<?= $this->doctype(); ?>
 <html lang="ru">
     <head>
-        <?php echo $this->headMeta(); ?>
-        <?php echo $this->headTitle(); ?>
-        <?php echo $this->headLink(); ?>
-        <?php echo $this->headStyle(); ?>
-        <?php echo $this->headScript(); ?>
+        <?= $this->headMeta() ?>
+        <?= $this->headTitle() ?>
+        <?= $this->headLink() ?>
+        <?= $this->headStyle() ?>
+        <?= $this->headScript() ?>
     </head>
     <body>
-        <?php echo $this->render('partial/header.phtml'); ?>
+        <div class="header">
+            <?= $this->render('partial/header.phtml') ?>
+            <?= $this->render('partial/menu_line.phtml') ?>
+        </div>
         
-        <?php echo $this->layout()->content; ?>
+        <div class="content">
+            <?= $this->layout()->content; ?>
+            
+            <?= $this->render('partial/narrow.phtml')?>
+            
+            <div class="cb"></div>
+        </div>
         
-        <?php echo $this->render('partial/footer.phtml'); ?>
-        <?php echo $this->inlineScript(); ?>
+        <?= $this->render('partial/categories.phtml') ?>
+        
+        <div class="footer">
+            <?= $this->render('partial/footer.phtml') ?>
+        </div>
+        
+        <?= $this->inlineScript(); ?>
     </body>
 </html>

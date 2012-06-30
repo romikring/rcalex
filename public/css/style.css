@@ -19,6 +19,9 @@ h1, h2, h3, h4, h5, h6 {
 	padding:0;
 	font-weight:normal;
 }
+label {
+    font-family:Tahoma, Arial, sans-serif;
+}
 ul {
 	list-style:none;
 }
@@ -37,12 +40,12 @@ ul {
 }
 .header_bg {
 	width:100%;
-	background:url(images/header.jpg) bottom left repeat-x;
+	background:url(/images/header.jpg) bottom left repeat-x;
 }
 .header .left {
 	width:533px;
 	padding-top:6px;
-	background:url(images/topline.jpg) top left no-repeat;
+	background:url(/images/topline.jpg) top left no-repeat;
 }
 .header .left .fr {
 	margin:15px 20px 0 0;
@@ -84,7 +87,7 @@ ul {
 .header .menu {
 	width:980px;
 	height:45px;
-	background:url(images/menu_bg.jpg) top left no-repeat;	
+	background:url(/images/menu_bg.jpg) top left no-repeat;	
 }
 .header .menu ul {
 	list-style:none;
@@ -117,13 +120,13 @@ ul {
 	height:24px;
 	border:none;
 	padding:0 0 0 25px;
-	background:url(images/search_bg.png) top left no-repeat;
+	background:url(/images/search_bg.png) top left no-repeat;
 }
 .header .menu  form.search .submit {
 	width:58px;
 	height:24px;
 	border:none;
-	background:url(images/find_button.png) top left no-repeat;
+	background:url(/images/find_button.png) top left no-repeat;
 	text-indent:-9999px;
 	margin:1px 0 0 5px;
 }
@@ -131,7 +134,7 @@ ul {
 	position:relative;
 	height:255px;
 	width:980px;
-	background:url(images/head_banner.png) top left no-repeat;
+	background:url(/images/head_banner.png) top left no-repeat;
 	
 }
 .header .ads_block .text1 {
@@ -167,10 +170,10 @@ ul {
 .header .ads_block .arr2 .sub {
 	right:110px;
 }
-/* футер */
+/* пїЅпїЅпїЅпїЅпїЅ */
 .footer1 {
 	width:100%;
-	background:#fdfdfd url(images/footer.jpg) top left repeat-x;
+	background:#fdfdfd url(/images/footer.jpg) top left repeat-x;
 }
 .footer1 .footer_inner {
 	width:980px;
@@ -179,7 +182,7 @@ ul {
 }
 .footer1 .footer_inner .close {
 	display:block;
-	background:url(images/arr_open.png) top left no-repeat;
+	background:url(/images/arr_open.png) top left no-repeat;
 	width:23px;
 	height:23px;
 	margin:-12px auto 0 auto;
@@ -217,7 +220,7 @@ ul {
 .footer .footer_inner ul li a {
 	color:#7d7d7d;
 }
-/* контент */
+
 .content {
 	width:980px;
 	margin:25px auto 20px auto;
@@ -282,7 +285,7 @@ h3.title_black {
 	color:#484848;
 	margin-bottom:10px;
 }
-h4.title_black {
+h4.title_black, h4.title_black label {
 	font-size:14px;
 	color:#484848;
 	margin-bottom:10px;
@@ -294,7 +297,7 @@ h4.title_black {
 	-webkit-padding-end: 20px;
 	-webkit-padding-start: 2px;
 	-webkit-user-select: none;
-	background: url("images/select_dark.jpg") no-repeat scroll left top transparent;
+	background: url(/images/select_dark.jpg) no-repeat scroll left top transparent;
 	border: none;
 	color: #545454;
 	height:24px;
@@ -306,7 +309,7 @@ h4.title_black {
 	white-space: nowrap;
 }
 .grey_block select.inactive {
-	background: url("images/select_light.jpg") no-repeat scroll left top transparent;	
+	background: url(/images/select_light.jpg) no-repeat scroll left top transparent;	
 	color: #c5c4c4;
 }
 .grey_block input, .grey_block textarea {
@@ -364,7 +367,7 @@ td.right2 div {
 }
 .add_proj_bottom {
 	border:none;
-	background: url("images/add_proj_button.jpg") no-repeat scroll left top transparent;
+	background: url(/images/add_proj_button.jpg) no-repeat scroll left top transparent;
 	text-indent:-9999px;
 	width:194px;
 	height:44px;
@@ -491,7 +494,7 @@ table.nav td {
 }
 table.nav .current {
 	display:block;
-	background:url(images/curr.jpg) top left no-repeat;
+	background:url(/images/curr.jpg) top left no-repeat;
 	width:7px;
 	height:15px;
 	color:#fff;
@@ -698,7 +701,7 @@ span.img_bl a {
 	color:#777777;
 }
 .bgleft, .nobgleft {
-	background:#f4f3f3 url(images/left_border.jpg) top left repeat-y;
+	background:#f4f3f3 url(/images/left_border.jpg) top left repeat-y;
 	position:relative;
 	padding:10px 10px 10px 15px;
 	margin:0;
@@ -724,7 +727,7 @@ select.small, select.full {
 	-webkit-padding-end: 20px;
 	-webkit-padding-start: 2px;
 	-webkit-user-select: none;
-	background: url("images/select_narrow.jpg") no-repeat scroll left top transparent;
+	background: url(/images/select_narrow.jpg) no-repeat scroll left top transparent;
 	border: none;
 	color: #545454;
 	height:24px;
@@ -737,7 +740,7 @@ select.small, select.full {
 }
 select.full {
 	width:420px;
-	background: url("images/select_wide.jpg") no-repeat scroll left top transparent;
+	background: url(/images/select_wide.jpg) no-repeat scroll left top transparent;
 }
 .rgt {
 	font-style:italic;
@@ -892,7 +895,7 @@ table.alphabet tr td:first-child {
 
 .content_bg {
 	width:100%;
-	background:url(images/content_bg.jpg) top left repeat-x;
+	background:url(/images/content_bg.jpg) top left repeat-x;
 }
 .grey_bg {
 	background:#f8f8f8;

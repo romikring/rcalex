@@ -2,6 +2,9 @@
 <root>
     <guest>
         <allow>
+            <about>
+                <action>project</action>
+            </about>
             <index>
                 <action>index</action>
             </index>
@@ -14,6 +17,10 @@
                 <action>forgot</action>
                 <action>restore</action>
             </auth>
+            <project>
+                <action>index</action>
+                <action>add</action>
+            </project>
             <error>
                 <action>error</action>
             </error>

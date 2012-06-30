@@ -15,7 +15,7 @@ class CreateUserProfileTable extends Akrabat_Db_Schema_AbstractChange
             
         $config = Zend_Registry::get('config');
         
-        $sql = "CREATE TABLE IF NOT EXISTS`" . self::TABLE . "` (
+        $sql = "CREATE TABLE `" . self::TABLE . "` (
             `user_id` int(10) unsigned NOT NULL,
             `fullname` varchar(150) DEFAULT NULL,
             `forgot_key` char(32) DEFAULT NULL,
@@ -46,6 +46,6 @@ class CreateUserProfileTable extends Akrabat_Db_Schema_AbstractChange
     }
     
     public function down() {
-        $this->_db->query("DROP TABLE IF EXISTS ". self::TABLE);
+        $this->_db->query("DROP TABLE ". self::TABLE);
     }
 }
