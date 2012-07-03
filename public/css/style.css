@@ -902,3 +902,6 @@ table.alphabet tr td:first-child {
 	width:100%;
 	padding-top:15px;
 }
+.errors li {
+    color: #f00;
+}

@@ -21,6 +21,13 @@ class Rabotal_Auth extends Zend_Auth {
                 'email' => $identity->email
             ));
             return true;
+        } elseif (is_array($identity) ) {
+            self::getInstance()->getStorage()->write((object) array(
+                'id' => $identity['id'],
+                'username' => $identity['username'],
+                'email' => $identity['email']
+            ));
+            return true;
         }
         return false;
     }

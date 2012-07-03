@@ -12,13 +12,14 @@ class CreateProjectTable extends Akrabat_Db_Schema_AbstractChange
             `status` enum('active','blocked') NOT NULL DEFAULT 'active',
             `date` int(10) unsigned NOT NULL,
             `budget` varchar(30) NOT NULL,
-            `demand_period` int(11) NOT NULL,
+            `demand_period` int(10) unsigned NOT NULL,
             `category_id` int(10) unsigned NOT NULL,
             `sub_category_id` int(10) unsigned NOT NULL,
-            `performer_from_id` int(11) NOT NULL,
+            `performer_from_id` int(10) unsigned NOT NULL,
             PRIMARY KEY (`id`),
             KEY `owner_id` (`owner_id`),
-            KEY `category_id` (`category_id`)
+            KEY `category_id` (`category_id`),
+            KEY `performer_from_id` (`performer_from_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
         
         $this->_db->query($sql);

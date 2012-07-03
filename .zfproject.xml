@@ -31,6 +31,9 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="project"/>
         </controllerFile>
+        <controllerFile controllerName="Category">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="SignUp"/>
@@ -50,6 +53,8 @@
         <modelFile modelName="Projects"/>
         <modelFile modelName="Categories"/>
         <modelFile modelName="SubCategories"/>
+        <modelFile modelName="ProjectsFiles"/>
+        <modelFile modelName="Places"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>
@@ -98,6 +103,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Project">
             <viewScriptFile forActionName="uploadFile"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Category">
+            <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
@@ -154,6 +162,9 @@
           <testApplicationControllerFile forControllerName="About">
             <testApplicationActionMethod forActionName="index"/>
             <testApplicationActionMethod forActionName="project"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="Category">
+            <testApplicationActionMethod forActionName="index"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>

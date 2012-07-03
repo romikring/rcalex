@@ -9,6 +9,10 @@
     </div> <!-- .title -->
     
     <?= $this->form($form->getName(), array('id' => $form->getAttrib('id'), 'action' => $form->getAction(), 'method' => $form->getMethod())); ?>
+    
+        <?php $name = $form->getElement('unique_lbl'); ?>
+        <?= $this->formHidden($name->getName(), $name->getValue(), $name->getAttribs()); ?>
+    
         <br/><br/>
         <h3 class="title_black">Основная информация о проекте</h3>
         <div class="grey_block">
@@ -18,6 +22,7 @@
                         <h4 class="title_black">Название проекта <span style="color:#e80000">*</span></h4>
                         <?php $name = $form->getElement('name'); ?>
                         <?= $this->formText($name->getName(), $name->getValue(), $name->getAttribs()); ?>
+                        <?= $this->formErrors($name->getMessages()); ?>
                         <br/>
                         <span class="green">Осталось 70 знаков</span>
                     </td>
@@ -34,12 +39,14 @@
                             <h4 class="title_black">Выберите специализацию <span style="color:#e80000">*</span></h4>
                             <?php $category = $form->getElement('category'); ?>
                             <?= $this->formSelect($category->getName(), $category->getValue(), $category->getAttribs(), $category->options ); ?>
+                            <?= $this->formErrors($category->getMessages()); ?>
                             <div class="cb"></div>
                         </div>
                         <div class="opt_right fr">
                             <h4 class="title_black">Уточните специализацию</h4>
                             <?php $subCategory = $form->getElement('sub_category'); ?>
                             <?= $this->formSelect($subCategory->getName(), $subCategory->getValue(), $subCategory->getAttribs(), $subCategory->options ); ?>
+                            <?= $this->formErrors($subCategory->getMessages()); ?>
                             <div class="cb"></div>
                         </div>
                     </td>
@@ -55,6 +62,7 @@
                         <h4 class="title_black">Описание проекта <span style="color:#e80000">*</span></h4>
                         <?php $description = $form->getElement('description'); ?>
                         <?= $this->formTextarea($description->getName(), $description->getValue(), $description->getAttribs()); ?>
+                        <?= $this->formErrors($description->getMessages()); ?>
                         <span class="green">Осталось 550 знаков</span>
 
                     </td>
@@ -103,6 +111,7 @@
                         <h4 class="title_black">Бюджет проекта</h4>
                         <?php $budget = $form->getElement('budget'); ?>
                         <?= $this->formText($budget->getName(), $budget->getValue(), $budget->getAttribs()); ?> руб.<br/>
+                        <?= $this->formErrors($budget->getMessages()); ?>
                     </td>
                     <td class="right2">
                         <img src="/images/notice_icon.png" class="fl" alt=""/>
@@ -116,6 +125,7 @@
                         <h4 class="title_black">Период приема заявок <span style="color:#e80000">*</span></h4>
                         <?php $period = $form->getElement('period'); ?>
                         <?= $this->formSelect($period->getName(), $period->getValue(), $period->getAttribs(), $period->options); ?>
+                        <?= $this->formErrors($period->getMessages()); ?>
                     </td>
                     <td class="right2">
                         <img src="/images/notice_icon.png" class="fl" alt=""/>
@@ -129,6 +139,7 @@
                         <h4 class="title_black">Местонахождение исполнителя</h4>
                         <?php $place = $form->getElement('employee_place'); ?>
                         <?= $this->formText($place->getName(), $place->getValue(), $place->getAttribs()); ?><br/>
+                        <?= $this->formErrors($place->getMessages()); ?>
                     </td>
                     <td class="right2">
                         <img src="/images/notice_icon.png" class="fl" alt=""/>
@@ -144,26 +155,36 @@
         <br/><br/>
         <h3 class="title_black">Авторизация</h3>
         <div class="grey_block">
+            <?= $this->formErrors($form->getCustomMessages()); ?>
             <table style="width:100%;">
                 <tr>
                     <td style="width:200px;">
                         <h4 class="title_black fl">
-                            <label for="auth-user-new"><input id="auth-user-new" type="radio" name="new_user" value="1" class="radio"/> Я новый пользователь</label>
+                            <label for="auth-user-new">
+                                <input id="auth-user-new" type="radio" name="new_user" value="1" class="radio" <?= ($this->new_user===1)?'checked="checked"':'';?>/>
+                                Я новый пользователь
+                            </label>
                         </h4>
                         <br/>
                         <h4 class="title_black fl">
-                            <label for="auth-user-old"><input id="auth-user-old" type="radio" name="new_user" value="0" class="radio"/> Я уже зарегистрирован</label>
+                            <label for="auth-user-old">
+                                <input id="auth-user-old" type="radio" name="new_user" value="0" class="radio" <?= ($this->new_user===0)?'checked="checked"':'';?>/>
+                                Я уже зарегистрирован
+                            </label>
                         </h4>
                     </td>
                     <td>
                         <?php $email = $form->getElement('email'); ?>
                         <?= $this->formText($email->getName(), $email->getValue(), $email->getAttribs()); ?>
+                        <?= $this->formErrors($email->getMessages()); ?>
                         <br/>
                         <?php $password = $form->getElement('password'); ?>
                         <?= $this->formPassword($password->getName(), $password->getValue(), $password->getAttribs()); ?>
+                        <?= $this->formErrors($password->getMessages()); ?>
                         <br/>
                         <?php $retype = $form->getElement('retype'); ?>
                         <?= $this->formPassword($retype->getName(), $retype->getValue(), $retype->getAttribs()); ?>
+                        <?= $this->formErrors($retype->getMessages()); ?>
                         <br/>
                     </td>
                     <td class="right">
@@ -177,10 +198,18 @@
         </div>
         
         <script type="text/javascript">
+            (function() {
+                if ( $('#auth-user-new').attr('checked') ) {
+                    $("#retype").attr('disabled', false);
+                }
+                if ( $('#auth-user-old').attr('checked') ) {
+                    $("#retype").attr('disabled', true);
+                }
+            })();
             function ckState() {
                 if( this.value == 1 ) { $("#retype").attr('disabled', false); }
                 else                  { $("#retype").attr('disabled', true); }
-            }
+            };
             $.each(['auth-user-new', 'auth-user-old'], function(idx, val) {
                 $('#' + val).click(ckState);
             });

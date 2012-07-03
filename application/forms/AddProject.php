@@ -13,11 +13,13 @@ class Rabotal_Form_AddProject extends Zend_Form
             ->setName('project-add')
             ->setAttrib('id', 'project-add');
         
+        $this->addElement('hidden', 'unique_lbl', array());
+        
         $this->addElement('text', 'name', array(
             'required' => true,
             'label' => 'Название проекта',
             'validators' => array(
-                'NotEmpty',
+                array('NotEmpty', true, array()),
                 array('StringLength', false, array('max' => 70, 'encoding' => $options['default']['charset']))
             ),
             'filters' => array(
@@ -31,14 +33,13 @@ class Rabotal_Form_AddProject extends Zend_Form
             'required' => true,
             'label' => 'Выберите специализацию',
             'validators' => array(
-                'NotEmpty',
+                array('NotEmpty', true, array()),
                 'Int'
             ),
             'filters' => array(
                 'StripTags',
                 'StripNewLines',
-                'StringTrim',
-                'Int'
+                'StringTrim'
             )
         ));
         $select = $this->getElement('category');
@@ -52,8 +53,7 @@ class Rabotal_Form_AddProject extends Zend_Form
             'filters' => array(
                 'StripTags',
                 'StripNewLines',
-                'StringTrim',
-                'Int'
+                'StringTrim'
             )
         ));
         $select = $this->getElement('sub_category');
@@ -63,7 +63,7 @@ class Rabotal_Form_AddProject extends Zend_Form
             'required' => true,
             'label' => 'Описание проекта',
             'validators' => array(
-                'NotEmpty',
+                array('NotEmpty', true, array()),
                 array('StringLength', false, array('max' => 550, 'encoding' => $options['default']['charset']))
             ),
             'filters' => array(
@@ -90,7 +90,8 @@ class Rabotal_Form_AddProject extends Zend_Form
             'required' => true,
             'label' => 'Период приема заявок',
             'validators' => array(
-                'Int'
+                array('NotEmpty', true, array()),
+                array('GreaterThan', false, array('min' => 0))
             ),
             'filters' => array(
                 'StripTags',
@@ -126,10 +127,9 @@ class Rabotal_Form_AddProject extends Zend_Form
             'placeholder' => 'Электронная почта',
             'class' => 'small',
             'validators' => array(
-                'NotEmpty',
-                array('StrindLength', false, array('max' => 60, 'encoding' => $options['default']['charset'])),
-                'EmailAddress',
-                array('Db_NoRecordExists', false, array('table' => 'users', 'field' => 'email')),
+                array('NotEmpty', true, array()),
+                array('StringLength', false, array('max' => 60, 'encoding' => $options['default']['charset'])),
+                'EmailAddress'
             ),
             'filters' => array(
                 'StripTags',
@@ -144,7 +144,7 @@ class Rabotal_Form_AddProject extends Zend_Form
             'placeholder' => 'Пароль',
             'class' => 'small',
             'validators' => array(
-                array('NotEmpty', false, array()),
+                array('NotEmpty', true, array()),
                 array('StringLength', false, array('min' => 5))
             ),
             'filters' => array('StringTrim')
