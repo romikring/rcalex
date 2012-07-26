@@ -101,7 +101,9 @@ class ProjectController extends Zend_Controller_Action
         $this->view->addProjectForm = $addProjectForm;
         
         $this->view->headLink()->appendStylesheet('/css/fileuploader.css');
-        $this->view->headScript()->appendFile('/js/fileuploader.js');
+        $this->view->headScript()
+            ->appendFile('/js/fileuploader.js')
+            ->appendFile('/js/char.counter.js');
     }
     
     private function _signIn($formData)

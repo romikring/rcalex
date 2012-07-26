@@ -24,7 +24,7 @@
                         <?= $this->formText($name->getName(), $name->getValue(), $name->getAttribs()); ?>
                         <?= $this->formErrors($name->getMessages()); ?>
                         <br/>
-                        <span class="green">Осталось 70 знаков</span>
+                        <span class="green" id="project-name-banner"></span>
                     </td>
                     <td class="right">
                         <img src="/images/notice_icon.png" class="fl" alt=""/>
@@ -63,7 +63,7 @@
                         <?php $description = $form->getElement('description'); ?>
                         <?= $this->formTextarea($description->getName(), $description->getValue(), $description->getAttribs()); ?>
                         <?= $this->formErrors($description->getMessages()); ?>
-                        <span class="green">Осталось 550 знаков</span>
+                        <span class="green" id="project-description-banner"></span>
 
                     </td>
                     <td class="right">
@@ -213,6 +213,9 @@
             $.each(['auth-user-new', 'auth-user-old'], function(idx, val) {
                 $('#' + val).click(ckState);
             });
+            
+            (new CharCounter()).banner('project-name-banner').field('name').max(70).run();
+            (new CharCounter()).banner("project-description-banner").field("description").max(550).run();
         </script>
         <?php endif; ?>
         
