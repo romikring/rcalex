@@ -229,7 +229,8 @@ class ProjectController extends Zend_Controller_Action
                 'id' => $hash,
                 'project_uniq_id' => $project_uid,
                 'date' => time(),
-                'name' => $filename
+                'name' => $filename,
+                'size' => strlen($fileRawData)
             ));
         }
 

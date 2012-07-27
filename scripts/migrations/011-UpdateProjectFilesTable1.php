@@ -30,6 +30,9 @@ class UpdateProjectFilesTable1 extends Akrabat_Db_Schema_AbstractChange
         $this->_db->query($sql);
         $sql = "ALTER TABLE  `{$table}` ADD PRIMARY KEY (`id`,`project_uniq_id`)";
         $this->_db->query($sql);
+        
+        $sql = "ALTER TABLE  `{$table}` ADD  `size` BIGINT UNSIGNED NOT NULL";
+        $this->_db->query($sql);
     }
     
     public function down() {

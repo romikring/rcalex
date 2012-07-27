@@ -530,6 +530,17 @@ qq.extend(qq.FileUploader.prototype, {
             throw new Error('element not found ' + type);
         }
         return element;
+    },
+    _onComplete: function(id, fileName, response){
+        qq.FileUploaderBasic.prototype._onComplete.apply(this, arguments);
+        
+        if (response.result){
+            var html = '<span class="green">'+ fileName +' <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br />';
+            var div = $("div#files");
+            div.html(div.html() + html).css('display', '');
+        } else {
+            alert("Ошибка загрузки файла. Пожалуйста, повторите попытку позже.");
+        }         
     }
 });
     

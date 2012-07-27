@@ -75,14 +75,13 @@
                 </tr>
                 <tr>
                     <td>
-<?if($this->projectFiles):?>
-                        <br/>
-                        <b>Прикрепленные файлы:</b><br/>
+                        <div id="files"<?if(!count($this->projectFiles)): ?> style="display:none;"<?endif;?>>
+                            
+                            <b>Прикрепленные файлы:</b><br />
 <?  foreach ($this->projectFiles as $row):?>
-                        <span class="green"><?= $this->escape($row->name)?> <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br/>
+                            <span class="green"><?= $this->escape($row->name)?> <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br />
 <?  endforeach;?>
-<?endif;?>
-                        <br/>
+                        </div>
                         <div id="file-uploader-link" style="height:23px"></div>
                     </td>
                     <td class="right">
