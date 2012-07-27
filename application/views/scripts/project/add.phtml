@@ -10,8 +10,8 @@
     
     <?= $this->form($form->getName(), array('id' => $form->getAttrib('id'), 'action' => $form->getAction(), 'method' => $form->getMethod())); ?>
     
-        <?php $name = $form->getElement('unique_lbl'); ?>
-        <?= $this->formHidden($name->getName(), $name->getValue(), $name->getAttribs()); ?>
+        <?php $uniq_id = $form->getElement('uniq_id'); ?>
+        <?= $this->formHidden($uniq_id->getName(), $uniq_id->getValue(), $uniq_id->getAttribs()); ?>
     
         <br/><br/>
         <h3 class="title_black">Основная информация о проекте</h3>
@@ -74,11 +74,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><br/>
+                    <td>
+<?if($this->projectFiles):?>
+                        <br/>
                         <b>Прикрепленные файлы:</b><br/>
-                        <span class="green">rabota.doc <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br/>
-                        <span class="green">example.jpg <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br/>
-                        
+<?  foreach ($this->projectFiles as $row):?>
+                        <span class="green"><?= $this->escape($row->name)?> <a href="#"><img src="/images/redcross_button.png" alt=""/></a></span><br/>
+<?  endforeach;?>
+<?endif;?>
                         <br/>
                         <div id="file-uploader-link" style="height:23px"></div>
                     </td>
@@ -91,16 +94,6 @@
                 </tr>
             </table>
         </div>
-        
-        <script type="text/javascript">
-            var uploader = new qq.FileUploader({
-                element: document.getElementById('file-uploader-link'),
-                action: '',
-                debug: true
-            });
-        </script>
-
-
 
         <br/><br/>
         <h3 class="title_black">Бюджет и сроки проекта</h3>
@@ -216,6 +209,17 @@
             
             (new CharCounter()).banner('project-name-banner').field('name').max(70).run();
             (new CharCounter()).banner("project-description-banner").field("description").max(550).run();
+            
+            new qq.FileUploader({
+                element: document.getElementById('file-uploader-link'),
+                action: '/project/upload-file',
+                allowedExtensions: [],
+                sizeLimit: 0,  
+                debug: true,
+                params: {
+                    project_uid: $("#uniq_id").val()
+                }
+            });
         </script>
         <?php endif; ?>
         

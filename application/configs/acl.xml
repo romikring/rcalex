@@ -20,6 +20,7 @@
             <project>
                 <action>index</action>
                 <action>add</action>
+                <action>upload-file</action>
             </project>
             <error>
                 <action>error</action>

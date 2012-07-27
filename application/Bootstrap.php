@@ -51,6 +51,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         return $translator;
     }
+    
+    protected function _initRotes() {
+        $router = $this->bootstrap('FrontController')->getResource('FrontController')->getRouter();
+        
+        $route = new Zend_Controller_Router_Route(
+            'project/add/:uniq_id',
+            array('controller' => 'project', 'action' => 'add')
+        );
+        $router->addRoute('project-add', $route);
+        
+        return $router;
+    }
 
     protected function _initUser()
     {

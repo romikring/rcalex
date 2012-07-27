@@ -13,7 +13,7 @@ class Rabotal_Form_AddProject extends Zend_Form
             ->setName('project-add')
             ->setAttrib('id', 'project-add');
         
-        $this->addElement('hidden', 'unique_lbl', array());
+        $this->addElement('hidden', 'uniq_id', array());
         
         $this->addElement('text', 'name', array(
             'required' => true,

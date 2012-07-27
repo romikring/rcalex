@@ -13,6 +13,25 @@ class ProjectController extends Zend_Controller_Action
         $categoriesTable = new Rabotal_Model_Categories;
         $auth = Rabotal_Auth::getInstance();
         
+        $projectTable = new Rabotal_Model_Projects;
+        $uniq_id = $request->getParam('uniq_id', NULL);
+        
+        if ( empty($uniq_id) ) {
+            // I want to sign project
+            $uniq_id = md5(microtime().rand());
+            $this->_redirect('/project/add/'.$uniq_id);
+        } elseif( $projectTable->fetchRow($projectTable->getAdapter()->quoteInto('uniq_id = ?', $uniq_id)) !== NULL ) {
+            // I want to create new project
+            $uniq_id = md5(microtime().rand());
+            $this->_redirect('/project/add/'.$uniq_id);
+        } elseif( !preg_match('/^[a-f0-9]{32}$/', $uniq_id) ) {
+            // validate project uniq_id
+            $uniq_id = md5(microtime().rand());
+            $this->_redirect('/project/add/'.$uniq_id);
+        }
+        
+        $elUniqId = $addProjectForm->getElement('uniq_id');
+        $elUniqId->setValue($uniq_id);
         $this->view->new_user = -1;
         
         // Fill form
@@ -24,10 +43,7 @@ class ProjectController extends Zend_Controller_Action
             }
         }
         
-        if ( $request->isGet() ) {
-            $addProjectForm->getElement('unique_lbl')->setValue(md5(microtime().rand()));
-        }
-        elseif ( $request->isPost() ) {
+        if ( $request->isPost() ) {
             $post = $request->getPost();
             
             // User authorized
@@ -64,11 +80,11 @@ class ProjectController extends Zend_Controller_Action
                 }
                 
                 if ( !$addProjectForm->isErrors() ) {
-                    $projectTable = new Rabotal_Model_Projects;
                     $projectFilesTable = new Rabotal_Model_ProjectsFiles;
 
                     $data = array(
                         'owner_id' => $auth->getIdentity()->id,
+                        'uniq_id' => $uniq_id,
                         'title' => $values['name'],
                         'description' => $values['description'],
                         'status' => 'active',
@@ -84,12 +100,8 @@ class ProjectController extends Zend_Controller_Action
                         $data['performer_from_id'] = $placesTable->getIdByNameOrSave($values['employee_place']);
                     }
                     
-                    $projectId = $projectTable->insert($data);
-
-                    $projectFilesTable->update(
-                        array('project_id' => $projectId),
-                        $projectFilesTable->getAdapter()->quoteInto("label = ?", $values['unique_lbl'])
-                    );
+                    $projectTable->insert($data);
+                    return $this->_redirect('/');
                 }
             }
             
@@ -98,7 +110,10 @@ class ProjectController extends Zend_Controller_Action
             }
         }
         
+        $projectFilesTable = new Rabotal_Model_ProjectsFiles;
+        
         $this->view->addProjectForm = $addProjectForm;
+        $this->view->projectFiles = $projectFilesTable->fetchAll($projectFilesTable->getAdapter()->quoteInto('project_uniq_id = ?', $uniq_id));
         
         $this->view->headLink()->appendStylesheet('/css/fileuploader.css');
         $this->view->headScript()
@@ -161,5 +176,63 @@ class ProjectController extends Zend_Controller_Action
 
     public function uploadFileAction()
     {
+        $response = $this->getResponse();
+        $request = $this->getRequest();
+        Zend_Layout::getMvcInstance()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $options = $this->getInvokeArg('bootstrap')->getOption('site');
+        
+        $filename = $request->getParam('qqfile', NULL);
+        $project_uid = $request->getParam('project_uid', NULL);
+        
+        if ( empty($filename) || empty($project_uid) ) {
+            $response->setBody(json_encode(array('result' => false, 'message' => 'Ошибка запроса.')));
+            return;
+        }
+        
+        if ( !$request->isPost() ) {
+            $response->setBody(json_encode(array('result' => false, 'message' => 'Доступ запрещен.')));
+            return;
+        }
+        
+        if ( FALSE === ($fileRawData = $request->getRawBody()) && !isset($_FILES['qqfile']) ) {
+            return $response->setBody(json_encode(array("result" => false, "message" => "Ошибка загрузки файла.")));
+        } elseif ( isset($_FILES['qqfile']) && is_uploaded_file($_FILES['qqfile']['tmp_name']) ) {
+            if ( $_FILES['qqfile']['error'] !== UPLOAD_ERR_OK ) {
+                return $response->setBody(json_encode(array("result" => false, "message" => "Ошибка загрузки файла.")));
+            }
+            $fileRawData = file_get_contents($_FILES['qqfile']['tmp_name']);
+        }
+        
+        if ( empty($fileRawData) ) {
+            return $response->setBody(json_encode(array("result" => false, "message" => "Ошибка загрузки файла.")));
+        }
+        
+        $hash = md5($fileRawData);
+        $dest = $options['project']['upload_path'].DIRECTORY_SEPARATOR.substr($hash, 0, 5).DIRECTORY_SEPARATOR;
+        
+        if ( !file_exists($dest) && FALSE === @mkdir($dest, 0755, true) ) {
+            return $response->setBody(json_encode(array("result" => false, "message" => "Ошибка сервера: файл не сохранен.")));
+        }
+        
+        if ( !is_writable($dest) ) {
+            return $response->setBody(json_encode(array("result" => false, "message" => "Ошибка сервера: файл не сохранен.")));
+        }
+        
+        if ( !file_put_contents($dest.$hash, $fileRawData) ) {
+            return $response->setBody(json_encode(array("result" => false, "message" => "Ошибка сервера: файл не сохранен.")));
+        }
+        
+        $projectFilesTable = new Rabotal_Model_ProjectsFiles;
+        if ( $projectFilesTable->find($hash, $project_uid)->current() === NULL ) {
+            $projectFilesTable->insert(array(
+                'id' => $hash,
+                'project_uniq_id' => $project_uid,
+                'date' => time(),
+                'name' => $filename
+            ));
+        }
+
+        return $response->setBody(json_encode(array("result" => true, 'message' => '', 'filename' => $filename)));
     }
 }
